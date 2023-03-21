@@ -22,6 +22,12 @@ public class ResearchProjectController {
         return service.createProject(researchProject);
     }
 
+    @PostMapping("/patients")
+    public String assignPatientToProject(@RequestBody PatientProjectRequest request) {
+        ResearchProject project = service.createPatientProjectAssignment(request);
+        return "Assigned patient " + request.getPatientId() + " to project " + request.getProjectId();
+    }
+
     @PutMapping("/{id}")
     public ResearchProject updateProject(@PathVariable Long id, @RequestBody ResearchProject newResearchProject) {
         return service.updateProject(id, newResearchProject);
@@ -30,5 +36,10 @@ public class ResearchProjectController {
     @DeleteMapping("/{id}")
     public void deleteProject(@PathVariable Long id) {
         service.deleteProject(id);
+    }
+
+    @DeleteMapping("/{projectId}/patients/{patientId}")
+    public void removePatientProjectAssignment(@PathVariable Long patientId, @PathVariable Long projectId) {
+        service.removePatientProjectAssignment(patientId, projectId);
     }
 }

@@ -1,10 +1,12 @@
 package com.example.medicalcentermanagement.patient;
 
+import com.example.medicalcentermanagement.researchproject.ResearchProject;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,4 +25,7 @@ public class Patient {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @ManyToMany(mappedBy = "patients")
+    List<ResearchProject> projects;
 }
