@@ -26,11 +26,18 @@ public class AgreementService {
         Patient patient = patientRepository.findById(agreementRequest.getPatientId()).orElseThrow();
         ResearchProject project = researchProjectRepository.findById(agreementRequest.getProjectId()).orElseThrow();
 
-        Agreement agreement = new Agreement();
-        agreement.setPatient(patient);
-        agreement.setProject(project);
+        Agreement agreement = agreementRepository.findByPatientIdAndProjectId(agreementRequest.getPatientId(),
+                agreementRequest.getProjectId());
 
-        return agreementRepository.save(agreement);
+        if (agreement != null) {
+            throw new IllegalStateException("Agreement already exists");
+        }
+
+        Agreement newAgreement = new Agreement();
+        newAgreement.setPatient(patient);
+        newAgreement.setProject(project);
+
+        return agreementRepository.save(newAgreement);
     }
 
     public void removeAgreement(Long patientId, Long projectId) {
