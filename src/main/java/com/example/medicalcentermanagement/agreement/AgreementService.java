@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -41,8 +42,8 @@ public class AgreementService {
     }
 
     public void removeAgreement(Long patientId, Long projectId) {
-        patientRepository.findById(patientId).orElseThrow();
-        researchProjectRepository.findById(projectId).orElseThrow();
+        Patient patient = patientRepository.findById(patientId).orElseThrow();
+        ResearchProject researchProject = researchProjectRepository.findById(projectId).orElseThrow();
 
         Agreement agreement = agreementRepository.findByPatientIdAndProjectId(patientId, projectId);
 
@@ -50,6 +51,8 @@ public class AgreementService {
             throw new EntityNotFoundException();
         }
 
+        Set<Patient> projectPatients = researchProject.getPatients();
+        projectPatients.remove(patient);
         agreementRepository.delete(agreement);
     }
 }
