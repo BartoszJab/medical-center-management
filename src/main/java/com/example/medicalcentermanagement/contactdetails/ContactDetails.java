@@ -1,9 +1,7 @@
 package com.example.medicalcentermanagement.contactdetails;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.medicalcentermanagement.patient.Patient;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +16,7 @@ public class ContactDetails {
     private String phoneNumber;
     private String email;
     private String address;
+
+    @OneToOne(mappedBy = "contactDetails", cascade = CascadeType.PERSIST)
+    private Patient patient;
 }

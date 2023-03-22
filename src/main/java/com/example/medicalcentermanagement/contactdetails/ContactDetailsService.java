@@ -1,5 +1,7 @@
 package com.example.medicalcentermanagement.contactdetails;
 
+import com.example.medicalcentermanagement.patient.Patient;
+import com.example.medicalcentermanagement.patient.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +10,22 @@ import org.springframework.stereotype.Service;
 public class ContactDetailsService {
 
     private final ContactDetailsRepository contactDetailsRepository;
+    private final PatientRepository patientRepository;
 
-    public ContactDetails createContactDetails(ContactDetails contactDetails) {
+    public ContactDetails createContactDetails(ContactDetailsRequest contactDetailsRequest) {
+        Patient patient = patientRepository.findById(contactDetailsRequest.getPatientId()).orElseThrow();
+
+        if (patient.getContactDetails() != null) {
+            throw new IllegalStateException("Contact details already exist for patient " + patient.getId());
+        }
+
+        ContactDetails contactDetails = new ContactDetails();
+        contactDetails.setPhoneNumber(contactDetailsRequest.getPhoneNumber());
+        contactDetails.setAddress(contactDetailsRequest.getAddress());
+        contactDetails.setEmail(contactDetailsRequest.getEmail());
+        contactDetails.setPatient(patient);
+        patient.setContactDetails(contactDetails);
+
         return contactDetailsRepository.save(contactDetails);
     }
 

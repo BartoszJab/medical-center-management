@@ -3,6 +3,7 @@ package com.example.medicalcentermanagement.patient;
 import com.example.medicalcentermanagement.contactdetails.ContactDetails;
 import com.example.medicalcentermanagement.researchproject.ResearchProject;
 import com.example.medicalcentermanagement.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE)
     private ContactDetails contactDetails;
 
