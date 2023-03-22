@@ -1,5 +1,5 @@
 package com.example.medicalcentermanagement.role;
 
 public enum RoleEnum {
-    PATIENT, EMPLOYEE, ADMIN
+    ROLE_PATIENT, ROLE_EMPLOYEE, ROLE_ADMIN
 }

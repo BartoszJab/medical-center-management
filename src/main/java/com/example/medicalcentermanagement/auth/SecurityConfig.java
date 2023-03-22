@@ -1,6 +1,6 @@
 package com.example.medicalcentermanagement.auth;
 
-import com.example.medicalcentermanagement.role.RoleEnum;
+import com.example.medicalcentermanagement.patient.PatientRepository;
 import com.example.medicalcentermanagement.user.JpaUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,16 +19,20 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final JpaUserDetailsService jpaUserDetailsService;
+    private final PatientRepository patientRepository;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.PUT).hasRole(RoleEnum.ADMIN.name())
-                        .requestMatchers(HttpMethod.POST).hasRole(RoleEnum.ADMIN.name())
-                        .requestMatchers(HttpMethod.DELETE).hasRole(RoleEnum.ADMIN.name())
-                        .anyRequest().permitAll())
+                        .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+                        .requestMatchers("/patients/{patientId}/**")
+                        .access(new PatientDataAuthorizationManager(patientRepository))
+                        .requestMatchers(HttpMethod.GET).hasAnyRole("ADMIN", "EMPLOYEE")
+                        .anyRequest().hasRole("ADMIN"))
                 .userDetailsService(jpaUserDetailsService)
                 .httpBasic(Customizer.withDefaults())
                 .build();
