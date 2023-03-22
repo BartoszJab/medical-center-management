@@ -12,7 +12,7 @@ public class ContactDetailsService {
     private final ContactDetailsRepository contactDetailsRepository;
     private final PatientRepository patientRepository;
 
-    public ContactDetails createContactDetails(ContactDetailsRequest contactDetailsRequest) {
+    public ContactDetailsResponse createContactDetails(ContactDetailsRequest contactDetailsRequest) {
         Patient patient = patientRepository.findById(contactDetailsRequest.getPatientId()).orElseThrow();
 
         if (patient.getContactDetails() != null) {
@@ -25,18 +25,20 @@ public class ContactDetailsService {
         contactDetails.setEmail(contactDetailsRequest.getEmail());
         contactDetails.setPatient(patient);
         patient.setContactDetails(contactDetails);
+        contactDetailsRepository.save(contactDetails);
 
-        return contactDetailsRepository.save(contactDetails);
+        return ContactDetailsResponse.toDto(contactDetails);
     }
 
-    public ContactDetails updateContactDetails(Long id, ContactDetails newContactDetails) {
+    public ContactDetailsResponse updateContactDetails(Long id, ContactDetails newContactDetails) {
         return contactDetailsRepository.findById(id)
                 .map(contactDetails -> {
                     contactDetails.setAddress(newContactDetails.getAddress());
                     contactDetails.setEmail(newContactDetails.getEmail());
                     contactDetails.setPhoneNumber(newContactDetails.getPhoneNumber());
+                    contactDetailsRepository.save(contactDetails);
 
-                    return contactDetailsRepository.save(contactDetails);
+                    return ContactDetailsResponse.toDto(contactDetails);
                 }).orElseThrow();
     }
 

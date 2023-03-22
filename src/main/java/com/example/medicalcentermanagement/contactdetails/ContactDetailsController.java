@@ -13,12 +13,12 @@ public class ContactDetailsController {
     private final ContactDetailsService service;
 
     @PostMapping
-    public ResponseEntity<ContactDetails> createContactDetails(@RequestBody ContactDetailsRequest request) {
+    public ResponseEntity<ContactDetailsResponse> createContactDetails(@RequestBody ContactDetailsRequest request) {
         return new ResponseEntity<>(service.createContactDetails(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ContactDetails updateContactDetails(@PathVariable Long id, @RequestBody ContactDetails newPatient) {
+    public ContactDetailsResponse updateContactDetails(@PathVariable Long id, @RequestBody ContactDetails newPatient) {
         return service.updateContactDetails(id, newPatient);
     }
 
