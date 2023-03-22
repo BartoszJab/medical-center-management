@@ -1,5 +1,6 @@
 package com.example.medicalcentermanagement.patient;
 
+import com.example.medicalcentermanagement.contactdetails.ContactDetails;
 import com.example.medicalcentermanagement.testresult.TestResult;
 import com.example.medicalcentermanagement.testresult.TestResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,6 @@ public class PatientService {
                     patient.setFirstName(newPatient.getFirstName());
                     patient.setLastName(newPatient.getLastName());
                     patient.setDateOfBirth(newPatient.getDateOfBirth());
-                    patient.setPhoneNumber(newPatient.getPhoneNumber());
-                    patient.setEmail(newPatient.getEmail());
-                    patient.setAddress(newPatient.getAddress());
 
                     return patientRepository.save(patient);
                 }).orElseThrow();
@@ -46,5 +44,10 @@ public class PatientService {
 
     public List<TestResult> getAllTestResultsForPatient(Long patientId) {
         return testResultRepository.getTestResultsForUser(patientId);
+    }
+
+    public ContactDetails getContactDetails(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow();
+        return patient.getContactDetails();
     }
 }

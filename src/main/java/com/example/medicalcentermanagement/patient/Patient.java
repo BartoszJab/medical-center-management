@@ -1,5 +1,6 @@
 package com.example.medicalcentermanagement.patient;
 
+import com.example.medicalcentermanagement.contactdetails.ContactDetails;
 import com.example.medicalcentermanagement.researchproject.ResearchProject;
 import com.example.medicalcentermanagement.user.User;
 import jakarta.persistence.*;
@@ -20,12 +21,12 @@ public class Patient {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
-    private String phoneNumber;
-    private String email;
-    private String address;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private ContactDetails contactDetails;
 
     @ManyToMany(mappedBy = "patients")
     List<ResearchProject> projects;
