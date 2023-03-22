@@ -13,12 +13,12 @@ public class TestResultController {
     private final TestResultService service;
 
     @PostMapping
-    public ResponseEntity<TestResult> addTestResult(@RequestBody TestResultRequest testResultRequest) {
+    public ResponseEntity<TestResultResponse> addTestResult(@RequestBody TestResultRequest testResultRequest) {
         return new ResponseEntity<>(service.addTestResult(testResultRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public TestResult updateTestResult(@PathVariable Long id, @RequestBody TestResult newResult) {
+    public TestResultResponse updateTestResult(@PathVariable Long id, @RequestBody TestResult newResult) {
         return service.updateTestResult(id, newResult);
     }
 

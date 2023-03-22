@@ -1,7 +1,7 @@
 package com.example.medicalcentermanagement.patient;
 
 import com.example.medicalcentermanagement.contactdetails.ContactDetailsResponse;
-import com.example.medicalcentermanagement.testresult.TestResult;
+import com.example.medicalcentermanagement.testresult.TestResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class PatientController {
     }
 
     @GetMapping("/{patientId}/results")
-    public List<TestResult> getAllTestResultsForPatient(@PathVariable Long patientId) {
+    public List<TestResultResponse> getAllTestResultsForPatient(@PathVariable Long patientId) {
         return service.getAllTestResultsForPatient(patientId);
     }
 

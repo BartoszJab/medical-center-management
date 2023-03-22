@@ -3,8 +3,8 @@ package com.example.medicalcentermanagement.patient;
 import com.example.medicalcentermanagement.contactdetails.ContactDetails;
 import com.example.medicalcentermanagement.contactdetails.ContactDetailsRepository;
 import com.example.medicalcentermanagement.contactdetails.ContactDetailsResponse;
-import com.example.medicalcentermanagement.testresult.TestResult;
 import com.example.medicalcentermanagement.testresult.TestResultRepository;
+import com.example.medicalcentermanagement.testresult.TestResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +57,10 @@ public class PatientService {
         return PatientResponse.toDto(patient);
     }
 
-    public List<TestResult> getAllTestResultsForPatient(Long patientId) {
-        return testResultRepository.getTestResultsForUser(patientId);
+    public List<TestResultResponse> getAllTestResultsForPatient(Long patientId) {
+        return testResultRepository.getTestResultsForUser(patientId)
+                .stream()
+                .map(TestResultResponse::toDto).collect(Collectors.toList());
     }
 
     public ContactDetailsResponse getContactDetails(Long patientId) {

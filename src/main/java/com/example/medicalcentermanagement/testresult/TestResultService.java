@@ -12,24 +12,26 @@ public class TestResultService {
     private final TestResultRepository resultRepository;
     private final OrderRepository orderRepository;
 
-    public TestResult addTestResult(TestResultRequest testResultRequest) {
+    public TestResultResponse addTestResult(TestResultRequest testResultRequest) {
         Order order = orderRepository.findById(testResultRequest.getOrderId()).orElseThrow();
 
         TestResult testResult = new TestResult();
         testResult.setTestType(testResultRequest.getTestType());
-        testResult.setResultDescription(testResult.getResultDescription());
+        testResult.setResultDescription(testResultRequest.getResultDescription());
         testResult.setOrder(order);
+        resultRepository.save(testResult);
 
-        return resultRepository.save(testResult);
+        return TestResultResponse.toDto(testResult);
     }
 
-    public TestResult updateTestResult(Long id, TestResult newResult) {
+    public TestResultResponse updateTestResult(Long id, TestResult newResult) {
         return resultRepository.findById(id)
                 .map(result -> {
                     result.setTestType(newResult.getTestType());
                     result.setResultDescription(newResult.getResultDescription());
+                    resultRepository.save(result);
 
-                    return resultRepository.save(result);
+                    return TestResultResponse.toDto(result);
                 }).orElseThrow();
     }
 
