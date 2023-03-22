@@ -15,12 +15,12 @@ public class AgreementController {
     private final AgreementService service;
 
     @GetMapping
-    public List<Agreement> getAgreements() {
+    public List<AgreementResponse> getAgreements() {
         return service.getAgreements();
     }
 
     @PostMapping
-    public ResponseEntity<Agreement> addAgreement(@RequestBody AgreementRequest agreementRequest) {
+    public ResponseEntity<AgreementResponse> addAgreement(@RequestBody AgreementRequest agreementRequest) {
         return new ResponseEntity<>(service.addAgreement(agreementRequest), HttpStatus.CREATED);
     }
 

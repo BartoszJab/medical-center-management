@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,11 +20,13 @@ public class AgreementService {
     private final ResearchProjectRepository researchProjectRepository;
     private final PatientRepository patientRepository;
 
-    public List<Agreement> getAgreements() {
-        return agreementRepository.findAll();
+    public List<AgreementResponse> getAgreements() {
+        return agreementRepository.findAll()
+                .stream()
+                .map(AgreementResponse::toDto).collect(Collectors.toList());
     }
 
-    public Agreement addAgreement(AgreementRequest agreementRequest) {
+    public AgreementResponse addAgreement(AgreementRequest agreementRequest) {
         Patient patient = patientRepository.findById(agreementRequest.getPatientId()).orElseThrow();
         ResearchProject project = researchProjectRepository.findById(agreementRequest.getProjectId()).orElseThrow();
 
@@ -37,8 +40,9 @@ public class AgreementService {
         Agreement newAgreement = new Agreement();
         newAgreement.setPatient(patient);
         newAgreement.setProject(project);
+        agreementRepository.save(newAgreement);
 
-        return agreementRepository.save(newAgreement);
+        return AgreementResponse.toDto(newAgreement);
     }
 
     public void removeAgreement(Long patientId, Long projectId) {
