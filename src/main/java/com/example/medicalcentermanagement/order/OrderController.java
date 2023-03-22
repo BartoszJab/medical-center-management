@@ -15,12 +15,12 @@ public class OrderController {
     private final OrderService service;
 
     @GetMapping
-    public List<Order> getOrders() {
+    public List<OrderResponse> getOrders() {
         return service.getOrders();
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest request) {
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderRequest request) {
         return new ResponseEntity<>(service.createOrder(request), HttpStatus.CREATED);
     }
 }

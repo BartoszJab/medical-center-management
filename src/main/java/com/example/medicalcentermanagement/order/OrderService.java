@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,11 +18,13 @@ public class OrderService {
     private final ResearchProjectRepository projectRepository;
     private final PatientRepository patientRepository;
 
-    public List<Order> getOrders() {
-        return orderRepository.findAll();
+    public List<OrderResponse> getOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(OrderResponse::toDto).collect(Collectors.toList());
     }
 
-    public Order createOrder(OrderRequest orderRequest) {
+    public OrderResponse createOrder(OrderRequest orderRequest) {
         Patient patient = patientRepository.findById(orderRequest.getPatientId()).orElseThrow();
         ResearchProject project = projectRepository.findById(orderRequest.getProjectId()).orElseThrow();
 
@@ -36,7 +39,8 @@ public class OrderService {
         newOrder.setResearchDate(orderRequest.getResearchDate());
         newOrder.setPatient(patient);
         newOrder.setProject(project);
+        orderRepository.save(newOrder);
 
-        return orderRepository.save(newOrder);
+        return OrderResponse.toDto(newOrder);
     }
 }
