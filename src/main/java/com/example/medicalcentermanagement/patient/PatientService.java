@@ -27,10 +27,10 @@ public class PatientService {
 
     public PatientResponse createPatient(PatientRequest patientRequest) {
         Patient patient = new Patient();
-        patient.setFirstName(patient.getFirstName());
+        patient.setFirstName(patientRequest.getFirstName());
         patient.setLastName(patientRequest.getLastName());
         patient.setDateOfBirth(patientRequest.getDateOfBirth());
-        patient.setGender(patient.getGender());
+        patient.setGender(patientRequest.getGender());
         patientRepository.save(patient);
 
         return PatientResponse.toDto(patient);
