@@ -27,7 +27,7 @@ public class Patient {
     private Gender gender;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private ContactDetails contactDetails;
 
     @ManyToMany(mappedBy = "patients")
