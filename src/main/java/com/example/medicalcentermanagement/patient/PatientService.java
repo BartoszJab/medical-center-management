@@ -1,6 +1,8 @@
 package com.example.medicalcentermanagement.patient;
 
 import com.example.medicalcentermanagement.contactdetails.ContactDetails;
+import com.example.medicalcentermanagement.contactdetails.ContactDetailsRepository;
+import com.example.medicalcentermanagement.contactdetails.ContactDetailsResponse;
 import com.example.medicalcentermanagement.testresult.TestResult;
 import com.example.medicalcentermanagement.testresult.TestResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final TestResultRepository testResultRepository;
+    private final ContactDetailsRepository contactDetailsRepository;
 
     public List<Patient> getPatients() {
         return patientRepository.findAll();
@@ -46,8 +49,8 @@ public class PatientService {
         return testResultRepository.getTestResultsForUser(patientId);
     }
 
-    public ContactDetails getContactDetails(Long patientId) {
-        Patient patient = patientRepository.findById(patientId).orElseThrow();
-        return patient.getContactDetails();
+    public ContactDetailsResponse getContactDetails(Long patientId) {
+        ContactDetails contactDetails = contactDetailsRepository.findByPatientId(patientId).orElseThrow();
+        return ContactDetailsResponse.toDto(contactDetails);
     }
 }
