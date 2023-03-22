@@ -1,6 +1,7 @@
 package com.example.medicalcentermanagement.patient;
 
 import com.example.medicalcentermanagement.researchproject.ResearchProject;
+import com.example.medicalcentermanagement.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +29,7 @@ public class Patient {
 
     @ManyToMany(mappedBy = "patients")
     List<ResearchProject> projects;
+
+    @OneToOne
+    private User user;
 }
