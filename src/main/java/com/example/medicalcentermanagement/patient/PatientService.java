@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,22 +19,32 @@ public class PatientService {
     private final TestResultRepository testResultRepository;
     private final ContactDetailsRepository contactDetailsRepository;
 
-    public List<Patient> getPatients() {
-        return patientRepository.findAll();
+    public List<PatientResponse> getPatients() {
+        return patientRepository.findAll()
+                .stream()
+                .map(PatientResponse::toDto).collect(Collectors.toList());
     }
 
-    public Patient createPatient(Patient patient) {
-        return patientRepository.save(patient);
+    public PatientResponse createPatient(PatientRequest patientRequest) {
+        Patient patient = new Patient();
+        patient.setFirstName(patient.getFirstName());
+        patient.setLastName(patientRequest.getLastName());
+        patient.setDateOfBirth(patientRequest.getDateOfBirth());
+        patient.setGender(patient.getGender());
+        patientRepository.save(patient);
+
+        return PatientResponse.toDto(patient);
     }
 
-    public Patient updatePatient(Long id, Patient newPatient) {
+    public PatientResponse updatePatient(Long id, PatientRequest newPatient) {
         return patientRepository.findById(id)
                 .map(patient -> {
                     patient.setFirstName(newPatient.getFirstName());
                     patient.setLastName(newPatient.getLastName());
                     patient.setDateOfBirth(newPatient.getDateOfBirth());
+                    patientRepository.save(patient);
 
-                    return patientRepository.save(patient);
+                    return PatientResponse.toDto(patient);
                 }).orElseThrow();
     }
 
@@ -41,8 +52,9 @@ public class PatientService {
         patientRepository.deleteById(id);
     }
 
-    public Patient getPatient(Long patientId) {
-        return patientRepository.findById(patientId).orElseThrow();
+    public PatientResponse getPatient(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow();
+        return PatientResponse.toDto(patient);
     }
 
     public List<TestResult> getAllTestResultsForPatient(Long patientId) {

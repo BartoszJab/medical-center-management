@@ -17,12 +17,12 @@ public class PatientController {
     private final PatientService service;
 
     @GetMapping
-    public List<Patient> getPatients() {
+    public List<PatientResponse> getPatients() {
         return service.getPatients();
     }
 
     @GetMapping("/{patientId}")
-    public Patient getPatient(@PathVariable Long patientId) {
+    public PatientResponse getPatient(@PathVariable Long patientId) {
         return service.getPatient(patientId);
     }
 
@@ -37,12 +37,12 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
+    public ResponseEntity<PatientResponse> createPatient(@RequestBody PatientRequest patient) {
         return new ResponseEntity<>(service.createPatient(patient), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Patient updatePatient(@PathVariable Long id, @RequestBody Patient newPatient) {
+    public PatientResponse updatePatient(@PathVariable Long id, @RequestBody PatientRequest newPatient) {
         return service.updatePatient(id, newPatient);
     }
 
