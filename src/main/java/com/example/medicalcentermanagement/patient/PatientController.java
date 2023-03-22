@@ -1,5 +1,6 @@
 package com.example.medicalcentermanagement.patient;
 
+import com.example.medicalcentermanagement.testresult.TestResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,16 @@ public class PatientController {
     @GetMapping
     public List<Patient> getPatients() {
         return service.getPatients();
+    }
+
+    @GetMapping("/{patientId}")
+    public Patient getPatient(@PathVariable Long patientId) {
+        return service.getPatient(patientId);
+    }
+
+    @GetMapping("/{patientId}/results")
+    public List<TestResult> getAllTestResultsForPatient(@PathVariable Long patientId) {
+        return service.getAllTestResultsForPatient(patientId);
     }
 
     @PostMapping
