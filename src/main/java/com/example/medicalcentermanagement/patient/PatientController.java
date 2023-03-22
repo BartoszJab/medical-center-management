@@ -3,6 +3,8 @@ package com.example.medicalcentermanagement.patient;
 import com.example.medicalcentermanagement.contactdetails.ContactDetails;
 import com.example.medicalcentermanagement.testresult.TestResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,8 +37,8 @@ public class PatientController {
     }
 
     @PostMapping
-    public Patient createPatient(@RequestBody Patient patient) {
-        return service.createPatient(patient);
+    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
+        return new ResponseEntity<>(service.createPatient(patient), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

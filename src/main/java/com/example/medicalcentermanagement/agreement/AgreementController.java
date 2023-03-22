@@ -1,6 +1,8 @@
 package com.example.medicalcentermanagement.agreement;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +20,8 @@ public class AgreementController {
     }
 
     @PostMapping
-    public Agreement addAgreement(@RequestBody AgreementRequest agreementRequest) {
-        return service.addAgreement(agreementRequest);
+    public ResponseEntity<Agreement> addAgreement(@RequestBody AgreementRequest agreementRequest) {
+        return new ResponseEntity<>(service.addAgreement(agreementRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/patients/{patientId}/projects/{projectId}")

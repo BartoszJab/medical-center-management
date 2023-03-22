@@ -1,6 +1,8 @@
 package com.example.medicalcentermanagement.testresult;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,8 +13,8 @@ public class TestResultController {
     private final TestResultService service;
 
     @PostMapping
-    public TestResult addTestResult(@RequestBody TestResultRequest testResultRequest) {
-        return service.addTestResult(testResultRequest);
+    public ResponseEntity<TestResult> addTestResult(@RequestBody TestResultRequest testResultRequest) {
+        return new ResponseEntity<>(service.addTestResult(testResultRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

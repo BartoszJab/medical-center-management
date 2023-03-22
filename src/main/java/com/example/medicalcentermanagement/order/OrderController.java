@@ -1,6 +1,8 @@
 package com.example.medicalcentermanagement.order;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody OrderRequest request) {
-        return service.createOrder(request);
+    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest request) {
+        return new ResponseEntity<>(service.createOrder(request), HttpStatus.CREATED);
     }
 }
