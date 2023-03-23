@@ -1,6 +1,7 @@
 package com.example.medicalcentermanagement.patient;
 
 import com.example.medicalcentermanagement.contactdetails.ContactDetailsResponse;
+import com.example.medicalcentermanagement.researchproject.ResearchProject;
 import com.example.medicalcentermanagement.testresult.TestResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,11 @@ public class PatientController {
     @GetMapping("/{patientId}/results")
     public List<TestResultResponse> getAllTestResultsForPatient(@PathVariable Long patientId) {
         return service.getAllTestResultsForPatient(patientId);
+    }
+
+    @GetMapping("/{patientId}/projects")
+    public List<ResearchProject> getAllResearchProjectsForPatient(@PathVariable Long patientId) {
+        return service.getAllResearchProjectsForPatient(patientId);
     }
 
     @GetMapping("/{patientId}/contacts")

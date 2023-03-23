@@ -5,6 +5,7 @@ import com.example.medicalcentermanagement.contactdetails.ContactDetailsReposito
 import com.example.medicalcentermanagement.contactdetails.ContactDetailsResponse;
 import com.example.medicalcentermanagement.exception.notfound.ContactDetailsPatientNotFoundException;
 import com.example.medicalcentermanagement.exception.notfound.PatientNotFoundException;
+import com.example.medicalcentermanagement.researchproject.ResearchProject;
 import com.example.medicalcentermanagement.testresult.TestResultRepository;
 import com.example.medicalcentermanagement.testresult.TestResultResponse;
 import lombok.RequiredArgsConstructor;
@@ -72,5 +73,11 @@ public class PatientService {
                 contactDetailsRepository.findByPatientId(patientId).orElseThrow(() -> new ContactDetailsPatientNotFoundException(patientId));
 
         return ContactDetailsResponse.toDto(contactDetails);
+    }
+
+    public List<ResearchProject> getAllResearchProjectsForPatient(Long patientId) {
+        Patient patient =
+                patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
+        return patient.getProjects();
     }
 }

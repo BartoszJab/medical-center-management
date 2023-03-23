@@ -38,6 +38,11 @@ VALUES
     (2, 1),
     (3, 3);
 
+INSERT INTO PATIENT_PROJECT (patient_id, project_id)
+VALUES
+    (2, 1),
+    (3, 3);
+
 INSERT INTO LABORATORY_TEST_ORDER (id, research_date, patient_id, project_id)
 VALUES
     (1, '2020-01-12T14:30:00', 2, 1),
