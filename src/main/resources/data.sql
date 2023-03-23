@@ -24,7 +24,7 @@ VALUES
 INSERT INTO PATIENT (id, first_name, last_name, date_of_birth, gender, contact_details_id, user_id)
 VALUES
     (1, 'Jan', 'Kowalski', '1985-01-12', 'MALE', NULL, NULL),
-    (2, 'Kasia', 'Kowalska', '1999-04-14', 'FEMALE', 1, 2),
+    (2, 'Kasia', 'Kowalska', '1999-04-14', 'FEMALE', 1, 3),
     (3, 'Robert', 'Kowalski', '2000-05-20', 'MALE', 2, NULL);
 
 INSERT INTO RESEARCH_PROJECT (id, title, description)
