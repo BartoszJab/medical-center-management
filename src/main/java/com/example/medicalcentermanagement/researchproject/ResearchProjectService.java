@@ -42,7 +42,7 @@ public class ResearchProjectService {
         projectRepository.deleteById(id);
     }
 
-    public ResearchProject createPatientProjectAssignment(PatientProjectRequest request) {
+    public ResearchProject createPatientProjectAssignment(ResearchProjectRequest request) {
         Long patientId = request.getPatientId();
         Long projectId = request.getProjectId();
 

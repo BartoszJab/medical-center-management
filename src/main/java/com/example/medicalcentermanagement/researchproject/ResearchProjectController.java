@@ -25,7 +25,7 @@ public class ResearchProjectController {
     }
 
     @PostMapping("/patients")
-    public String assignPatientToProject(@RequestBody PatientProjectRequest request) {
+    public String assignPatientToProject(@RequestBody ResearchProjectRequest request) {
         ResearchProject project = service.createPatientProjectAssignment(request);
         return "Assigned patient " + request.getPatientId() + " to project " + request.getProjectId();
     }
