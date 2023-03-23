@@ -1,5 +1,6 @@
 package com.example.medicalcentermanagement.order;
 
+import com.example.medicalcentermanagement.exception.PatientNotAssignedToProject;
 import com.example.medicalcentermanagement.exception.alreadyexists.OrderAlreadyExistsException;
 import com.example.medicalcentermanagement.exception.notfound.PatientNotFoundException;
 import com.example.medicalcentermanagement.exception.notfound.ProjectNotFoundException;
@@ -36,6 +37,10 @@ public class OrderService {
 
         ResearchProject project =
                 projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+
+        if (!patient.getProjects().contains(project)) {
+            throw new PatientNotAssignedToProject(patientId, projectId);
+        }
 
         Order order = orderRepository.findByPatientIdAndProjectId(orderRequest.getPatientId(),
                 orderRequest.getProjectId());

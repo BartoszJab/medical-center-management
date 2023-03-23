@@ -20,7 +20,7 @@ public class CustomExceptionHandler {
             ProjectNotFoundException.class, OrderNotFoundException.class, ContactDetailsPatientNotFoundException.class,
             PatientNotFoundException.class, TestResultNotFoundException.class, OrderAlreadyExistsException.class,
             ContactDetailsAlreadyExistsException.class, AgreementAlreadyExistsException.class,
-            AgreementNotFoundException.class, ContactDetailsNotFoundException.class
+            AgreementNotFoundException.class, ContactDetailsNotFoundException.class, PatientNotAssignedToProject.class
     })
     public ResponseEntity<Object> customNotFoundHandler(RuntimeException e) {
 
