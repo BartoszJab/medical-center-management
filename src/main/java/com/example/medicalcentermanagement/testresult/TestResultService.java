@@ -1,7 +1,7 @@
 package com.example.medicalcentermanagement.testresult;
 
-import com.example.medicalcentermanagement.exception.OrderNotFoundException;
-import com.example.medicalcentermanagement.exception.TestResultNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.OrderNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.TestResultNotFoundException;
 import com.example.medicalcentermanagement.order.Order;
 import com.example.medicalcentermanagement.order.OrderRepository;
 import lombok.RequiredArgsConstructor;

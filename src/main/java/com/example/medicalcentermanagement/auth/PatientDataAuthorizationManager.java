@@ -1,6 +1,6 @@
 package com.example.medicalcentermanagement.auth;
 
-import com.example.medicalcentermanagement.exception.PatientNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.PatientNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import lombok.RequiredArgsConstructor;

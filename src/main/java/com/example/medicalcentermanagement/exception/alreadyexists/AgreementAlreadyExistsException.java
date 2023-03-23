@@ -1,4 +1,4 @@
-package com.example.medicalcentermanagement.exception;
+package com.example.medicalcentermanagement.exception.alreadyexists;
 
 public class AgreementAlreadyExistsException extends RuntimeException {
 

@@ -1,8 +1,8 @@
 package com.example.medicalcentermanagement.contactdetails;
 
-import com.example.medicalcentermanagement.exception.ContactDetailsAlreadyExistsException;
-import com.example.medicalcentermanagement.exception.ContactDetailsNotFoundException;
-import com.example.medicalcentermanagement.exception.PatientNotFoundException;
+import com.example.medicalcentermanagement.exception.alreadyexists.ContactDetailsAlreadyExistsException;
+import com.example.medicalcentermanagement.exception.notfound.ContactDetailsNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.PatientNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import lombok.RequiredArgsConstructor;

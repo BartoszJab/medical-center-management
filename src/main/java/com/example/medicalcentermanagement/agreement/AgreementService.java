@@ -1,9 +1,9 @@
 package com.example.medicalcentermanagement.agreement;
 
-import com.example.medicalcentermanagement.exception.AgreementAlreadyExistsException;
-import com.example.medicalcentermanagement.exception.AgreementNotFoundException;
-import com.example.medicalcentermanagement.exception.PatientNotFoundException;
-import com.example.medicalcentermanagement.exception.ProjectNotFoundException;
+import com.example.medicalcentermanagement.exception.alreadyexists.AgreementAlreadyExistsException;
+import com.example.medicalcentermanagement.exception.notfound.AgreementNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.PatientNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.ProjectNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import com.example.medicalcentermanagement.researchproject.ResearchProject;

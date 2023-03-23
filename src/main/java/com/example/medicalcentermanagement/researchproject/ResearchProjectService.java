@@ -2,9 +2,9 @@ package com.example.medicalcentermanagement.researchproject;
 
 import com.example.medicalcentermanagement.agreement.Agreement;
 import com.example.medicalcentermanagement.agreement.AgreementRepository;
-import com.example.medicalcentermanagement.exception.AgreementNotFoundException;
-import com.example.medicalcentermanagement.exception.PatientNotFoundException;
-import com.example.medicalcentermanagement.exception.ProjectNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.AgreementNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.PatientNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.ProjectNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 package com.example.medicalcentermanagement.order;
 
-import com.example.medicalcentermanagement.exception.OrderAlreadyExistsException;
-import com.example.medicalcentermanagement.exception.PatientNotFoundException;
-import com.example.medicalcentermanagement.exception.ProjectNotFoundException;
+import com.example.medicalcentermanagement.exception.alreadyexists.OrderAlreadyExistsException;
+import com.example.medicalcentermanagement.exception.notfound.PatientNotFoundException;
+import com.example.medicalcentermanagement.exception.notfound.ProjectNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import com.example.medicalcentermanagement.researchproject.ResearchProject;
