@@ -3,6 +3,34 @@
 ## Uruchamianie aplikacji
 
 ## Endpointy
+
+Aplikacja posiada podstawowe uwierzytelnianie. Użytkownicy mogą mieć jedną z trzech ról: Administrator, Pracownik, Pacjent. Utworzone zostały 3 konta testowe:
+
+* <b><i>Administrator</i></b> ma dostęp do wszystkich zasobów oraz ich dodawania/modyfikowania/usuwania
+
+```
+Nazwa użytkownika   Hasło
+---------------------------------
+admin               adminpassword
+``` 
+    
+* <b><i>Pracownik</i></b> ma dostęp do pobierania wszystkich zasobów
+
+```
+Nazwa użytkownika   Hasło
+------------------------------------
+employee            employeepassword
+``` 
+    
+ 
+* <b><i>Pacjent</i></b> ma dostęp do pobierania tylko swoich zasobów
+
+```
+Nazwa użytkownika   Hasło
+-----------------------------------
+patient             patientpassword
+``` 
+
 ### Pacjenci
 
 1. Pobierz wszystkich pacjentów: http://localhost:8080/patients <b>GET</b>
@@ -13,7 +41,9 @@
 
 4. Pobierz wyniki badań pacjenta o podanym id: http://localhost:8080/patients/{id}/results <b>GET</b>
 
-5. Utwórz pacjenta: http://localhost:8080/patients <b>POST</b>
+5. Pobierz projekty badawcze, do których należy pacjent o podanym id: http://localhost:8080/patients/{id}/projects <b>GET</b>
+
+6. Utwórz pacjenta: http://localhost:8080/patients <b>POST</b>
 
 Przykładowe RequestBody: 
 ```
@@ -25,11 +55,11 @@ Przykładowe RequestBody:
 }
 ```
 
-6. Aktualizuj pacjenta o id: http://localhost:8080/patients/{id} <b>PUT</b>
+7. Aktualizuj pacjenta o id: http://localhost:8080/patients/{id} <b>PUT</b>
 
 RequestBody jak w przypadku dodawania
 
-7. Usuń pacjenta o id: http://localhost:8080/patients/{id} <b>DELETE</b>
+8. Usuń pacjenta o id: http://localhost:8080/patients/{id} <b>DELETE</b>
 
 ### Dane kontaktowe
 1. Utwórz dane kontaktowe dla pacjenta: http://localhost:8080/contacts <b>POST</b>
