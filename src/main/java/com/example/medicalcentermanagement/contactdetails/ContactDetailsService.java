@@ -1,5 +1,8 @@
 package com.example.medicalcentermanagement.contactdetails;
 
+import com.example.medicalcentermanagement.exception.ContactDetailsAlreadyExistsException;
+import com.example.medicalcentermanagement.exception.ContactDetailsNotFoundException;
+import com.example.medicalcentermanagement.exception.PatientNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +16,13 @@ public class ContactDetailsService {
     private final PatientRepository patientRepository;
 
     public ContactDetailsResponse createContactDetails(ContactDetailsRequest contactDetailsRequest) {
-        Patient patient = patientRepository.findById(contactDetailsRequest.getPatientId()).orElseThrow();
+        Long patientId = contactDetailsRequest.getPatientId();
+
+        Patient patient =
+                patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
 
         if (patient.getContactDetails() != null) {
-            throw new IllegalStateException("Contact details already exist for patient " + patient.getId());
+            throw new ContactDetailsAlreadyExistsException(patient.getId());
         }
 
         ContactDetails contactDetails = new ContactDetails();
@@ -39,7 +45,7 @@ public class ContactDetailsService {
                     contactDetailsRepository.save(contactDetails);
 
                     return ContactDetailsResponse.toDto(contactDetails);
-                }).orElseThrow();
+                }).orElseThrow(() -> new ContactDetailsNotFoundException(id));
     }
 
     public void deleteContactDetails(Long id) {

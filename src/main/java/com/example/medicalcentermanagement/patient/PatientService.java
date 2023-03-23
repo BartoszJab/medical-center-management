@@ -3,6 +3,8 @@ package com.example.medicalcentermanagement.patient;
 import com.example.medicalcentermanagement.contactdetails.ContactDetails;
 import com.example.medicalcentermanagement.contactdetails.ContactDetailsRepository;
 import com.example.medicalcentermanagement.contactdetails.ContactDetailsResponse;
+import com.example.medicalcentermanagement.exception.ContactDetailsPatientNotFoundException;
+import com.example.medicalcentermanagement.exception.PatientNotFoundException;
 import com.example.medicalcentermanagement.testresult.TestResultRepository;
 import com.example.medicalcentermanagement.testresult.TestResultResponse;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +47,7 @@ public class PatientService {
                     patientRepository.save(patient);
 
                     return PatientResponse.toDto(patient);
-                }).orElseThrow();
+                }).orElseThrow(() -> new PatientNotFoundException(id));
     }
 
     public void deletePatient(Long id) {
@@ -53,7 +55,9 @@ public class PatientService {
     }
 
     public PatientResponse getPatient(Long patientId) {
-        Patient patient = patientRepository.findById(patientId).orElseThrow();
+        Patient patient =
+                patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
+
         return PatientResponse.toDto(patient);
     }
 
@@ -64,7 +68,9 @@ public class PatientService {
     }
 
     public ContactDetailsResponse getContactDetails(Long patientId) {
-        ContactDetails contactDetails = contactDetailsRepository.findByPatientId(patientId).orElseThrow();
+        ContactDetails contactDetails =
+                contactDetailsRepository.findByPatientId(patientId).orElseThrow(() -> new ContactDetailsPatientNotFoundException(patientId));
+
         return ContactDetailsResponse.toDto(contactDetails);
     }
 }

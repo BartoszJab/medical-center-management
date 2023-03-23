@@ -1,10 +1,13 @@
 package com.example.medicalcentermanagement.agreement;
 
+import com.example.medicalcentermanagement.exception.AgreementAlreadyExistsException;
+import com.example.medicalcentermanagement.exception.AgreementNotFoundException;
+import com.example.medicalcentermanagement.exception.PatientNotFoundException;
+import com.example.medicalcentermanagement.exception.ProjectNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import com.example.medicalcentermanagement.researchproject.ResearchProject;
 import com.example.medicalcentermanagement.researchproject.ResearchProjectRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +30,19 @@ public class AgreementService {
     }
 
     public AgreementResponse addAgreement(AgreementRequest agreementRequest) {
-        Patient patient = patientRepository.findById(agreementRequest.getPatientId()).orElseThrow();
-        ResearchProject project = researchProjectRepository.findById(agreementRequest.getProjectId()).orElseThrow();
+        Long patientId = agreementRequest.getPatientId();
+        Long projectId = agreementRequest.getProjectId();
 
-        Agreement agreement = agreementRepository.findByPatientIdAndProjectId(agreementRequest.getPatientId(),
-                agreementRequest.getProjectId());
+        Patient patient =
+                patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
+
+        ResearchProject project =
+                researchProjectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+
+        Agreement agreement = agreementRepository.findByPatientIdAndProjectId(patientId, projectId);
 
         if (agreement != null) {
-            throw new IllegalStateException("Agreement already exists");
+            throw new AgreementAlreadyExistsException(patientId, projectId);
         }
 
         Agreement newAgreement = new Agreement();
@@ -46,13 +54,16 @@ public class AgreementService {
     }
 
     public void removeAgreement(Long patientId, Long projectId) {
-        Patient patient = patientRepository.findById(patientId).orElseThrow();
-        ResearchProject researchProject = researchProjectRepository.findById(projectId).orElseThrow();
+        Patient patient =
+                patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
+
+        ResearchProject researchProject =
+                researchProjectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
 
         Agreement agreement = agreementRepository.findByPatientIdAndProjectId(patientId, projectId);
 
         if (agreement == null) {
-            throw new EntityNotFoundException();
+            throw new AgreementNotFoundException(patientId, projectId);
         }
 
         Set<Patient> projectPatients = researchProject.getPatients();

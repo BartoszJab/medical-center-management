@@ -1,5 +1,7 @@
 package com.example.medicalcentermanagement.testresult;
 
+import com.example.medicalcentermanagement.exception.OrderNotFoundException;
+import com.example.medicalcentermanagement.exception.TestResultNotFoundException;
 import com.example.medicalcentermanagement.order.Order;
 import com.example.medicalcentermanagement.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,8 @@ public class TestResultService {
     private final OrderRepository orderRepository;
 
     public TestResultResponse addTestResult(TestResultRequest testResultRequest) {
-        Order order = orderRepository.findById(testResultRequest.getOrderId()).orElseThrow();
+        Long orderId = testResultRequest.getOrderId();
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
 
         TestResult testResult = new TestResult();
         testResult.setTestType(testResultRequest.getTestType());
@@ -32,7 +35,7 @@ public class TestResultService {
                     resultRepository.save(result);
 
                     return TestResultResponse.toDto(result);
-                }).orElseThrow();
+                }).orElseThrow(() -> new TestResultNotFoundException(id));
     }
 
     public void deleteTestResult(Long id) {

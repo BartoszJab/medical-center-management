@@ -2,6 +2,9 @@ package com.example.medicalcentermanagement.researchproject;
 
 import com.example.medicalcentermanagement.agreement.Agreement;
 import com.example.medicalcentermanagement.agreement.AgreementRepository;
+import com.example.medicalcentermanagement.exception.AgreementNotFoundException;
+import com.example.medicalcentermanagement.exception.PatientNotFoundException;
+import com.example.medicalcentermanagement.exception.ProjectNotFoundException;
 import com.example.medicalcentermanagement.patient.Patient;
 import com.example.medicalcentermanagement.patient.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +35,7 @@ public class ResearchProjectService {
                     project.setDescription(newResearchProject.getDescription());
 
                     return projectRepository.save(project);
-                }).orElseThrow();
+                }).orElseThrow(() -> new ProjectNotFoundException(id));
     }
 
     public void deleteProject(Long id) {
@@ -46,19 +49,25 @@ public class ResearchProjectService {
         Agreement agreement = agreementRepository.findByPatientIdAndProjectId(patientId, projectId);
 
         if (agreement == null) {
-            throw new IllegalStateException("Agreement does not exist");
+            throw new AgreementNotFoundException(patientId, projectId);
         }
 
-        Patient patient = patientRepository.findById(patientId).orElseThrow();
-        ResearchProject project = projectRepository.findById(projectId).orElseThrow();
+        Patient patient =
+                patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
+
+        ResearchProject project =
+                projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
 
         project.getPatients().add(patient);
         return projectRepository.save(project);
     }
 
     public void removePatientProjectAssignment(Long patientId, Long projectId) {
-        Patient patient = patientRepository.findById(patientId).orElseThrow();
-        ResearchProject project = projectRepository.findById(projectId).orElseThrow();
+        Patient patient =
+                patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
+
+        ResearchProject project =
+                projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
 
         project.getPatients().remove(patient);
         projectRepository.save(project);
