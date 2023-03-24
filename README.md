@@ -1,6 +1,22 @@
 # Zarządzanie ośrodkiem medycznym
 
 ## Uruchamianie aplikacji
+Wymagane:
+* JDK co najmniej w wersji 17 
+* Apache Maven
+* Baza MySQL
+
+Należy utworzyć schemat bazy MySQL o nazwie ```medical-center-management```. Baza powinna działać na porcie ```3306``` . Login i hasło MySQL: ```root 1P48QY3D```
+
+Poleceniem ```git clone https://github.com/BartoszJab/medical-center-management.git``` należy sklonować repozytorium i je otworzyć. Następnie wykorzystując polecenie ```mvn spring-boot:run``` aplikacja zostanie skompilowania i uruchomiona.
+
+# Wykorzystane technologie i biblioteki
+* Java
+* Spring Boot
+* Spring Security
+* JPA
+* Lombok
+* MySQL
 
 ## Endpointy
 
@@ -30,6 +46,7 @@ Nazwa użytkownika   Hasło
 -----------------------------------
 patient             patientpassword
 ``` 
+W celu przetestowania endpointów z użyciem <b>Postmana</b> należy najpierw uruchomić aplikację serwerową, a następnie wybrać jeden z linków, wkleić go do pola URL, ustawić odpowiednią metodę HTTP i kliknąć ```Send```. Aby przekazać dane logowania należy przejść do zakładki ```Authorization```, wybrać typ ```Basic Auth``` i podać dane.
 
 ### Pacjenci
 
